@@ -28,6 +28,7 @@ import AddFriendButton from "./AddFriendButton.vue";
   gap: 1rem;
   padding: 0px 10%;
   align-items: center;
+  font-family: "Montserrat", sans-serif;
 }
 .sections {
   display: flex;
