@@ -16,7 +16,7 @@ import HeaderRight from "./HeaderRight.vue";
 <style scoped>
 .header {
   display: flex;
-  background-color: white;
+  background-color: #ffffff;
   justify-content: space-between;
   align-items: center;
   padding: 16px 10%;

@@ -43,7 +43,7 @@
 }
 
 .button-icon {
-  fill: white;
+  fill: #ffffff;
 }
 
 .add-button:hover {

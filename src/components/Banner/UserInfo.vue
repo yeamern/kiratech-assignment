@@ -9,7 +9,7 @@
 
 <style scoped>
 .user-info {
-  color: white;
+  color: #ffffff;
   padding: 0px 8px;
 }
 .username {

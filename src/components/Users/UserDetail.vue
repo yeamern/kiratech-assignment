@@ -96,7 +96,7 @@ function preventClosePopup(e: MouseEvent) {
 }
 
 .popup-content {
-  background-color: white;
+  background-color: #ffffff;
   width: fit-content;
   max-width: 80%;
   min-width: 40%;

@@ -6,16 +6,19 @@ import { ref } from "vue";
 import UserDetail from "./UserDetail.vue";
 import RefreshButton from "./RefreshButton.vue";
 
+type SortBy = "nameAsc" | "nameDes" | "dateAsc" | "dateDes";
+
 const users: Ref<User[]> = ref([]);
 const filteredUsers: Ref<User[]> = ref([]);
 const isLoading: Ref<boolean> = ref(true);
 const searchText: Ref<string> = ref("");
 const selectedUser: Ref<User> = ref();
 const popupVisible: Ref<boolean> = ref(false);
+const sortBy: Ref<SortBy> = ref(null);
 
 onMounted(fetchData);
 
-watch(searchText, (newSearchText) => {
+watch([searchText, sortBy], ([newSearchText, newSortBy]) => {
   filteredUsers.value = users.value.filter((u) => {
     const sanitizedSearchText = newSearchText.trim().toLowerCase();
     if (getUserName(u).trim().toLowerCase().includes(sanitizedSearchText)) {
@@ -32,6 +35,24 @@ watch(searchText, (newSearchText) => {
     }
     return false;
   });
+
+  if (newSortBy == "nameAsc") {
+    filteredUsers.value = [...filteredUsers.value].sort((a, b) =>
+      a.name.first.localeCompare(b.name.first)
+    );
+  } else if (newSortBy == "nameDes") {
+    filteredUsers.value = [...filteredUsers.value].sort((a, b) =>
+      b.name.first.localeCompare(a.name.first)
+    );
+  } else if (newSortBy == "dateAsc") {
+    filteredUsers.value = [...filteredUsers.value].sort((a, b) =>
+      moment(a.registered.date).diff(b.registered.date)
+    );
+  } else if (newSortBy == "dateDes") {
+    filteredUsers.value = [...filteredUsers.value].sort((a, b) =>
+      moment(b.registered.date).diff(a.registered.date)
+    );
+  }
 });
 
 watch(users, (newUsers) => {
@@ -42,12 +63,14 @@ watch(users, (newUsers) => {
 function fetchData() {
   isLoading.value = true;
   users.value = [];
+  sortBy.value = null;
   fetch("https://randomuser.me/api/?results=20")
     .then((res) => res.json())
     .then((res) => {
       users.value = res.results;
     })
     .finally(() => (isLoading.value = false));
+  window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 }
 
 function displayUserDetails(user: User) {
@@ -84,6 +107,25 @@ function closePopup() {
 <template>
   <div class="container">
     <div class="search-container">
+      <div class="sort-container">
+        <select v-model="sortBy" class="sort">
+          <option disabled :value="null">
+            <span>Sort By </span>
+          </option>
+          <option value="nameAsc">
+            <span>Name — Ascending</span>
+          </option>
+          <option value="nameDes">
+            <span>Name — Descending</span>
+          </option>
+          <option value="dateAsc">
+            <span>Date — Ascending</span>
+          </option>
+          <option value="dateDes">
+            <span>Date — Descending</span>
+          </option>
+        </select>
+      </div>
       <input type="text" placeholder="Search" v-model="searchText" />
     </div>
     <hr />
@@ -141,7 +183,39 @@ function closePopup() {
 
 .search-container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+}
+
+.sort-container {
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.sort {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  padding: 12px 36px 12px 24px;
+  color: gray;
+}
+
+.sort-container::after {
+  content: "▾";
+  color: lightgray;
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.sort option {
+  font-size: 14px;
 }
 
 .search-container input {
