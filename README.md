@@ -1,6 +1,7 @@
 # kiratech-assignment
 
 Here is the completed assignment, submitted within the designated time frame. 
+
 Kindly refer to the dev branch for some additional tweaks and improvements I've made.
 
 ## Recommended IDE Setup
