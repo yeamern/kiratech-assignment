@@ -1,6 +1,7 @@
 # kiratech-assignment
 
-This template should help get you started developing with Vue 3 in Vite.
+Here is the completed assignment, submitted within the designated time frame. 
+Kindly refer to the dev branch for some additional tweaks and improvements I've made.
 
 ## Recommended IDE Setup
 
