@@ -16,6 +16,10 @@ import UsersList from "./components/Users/UsersList.vue";
 </template>
 
 <style scoped>
+header {
+  position: sticky;
+  top: 0;
+}
 main {
   margin-bottom: 64px;
 }
