@@ -15,5 +15,6 @@
 .logo {
   margin-right: 30px;
   size: 42px;
+  cursor: pointer;
 }
 </style>
