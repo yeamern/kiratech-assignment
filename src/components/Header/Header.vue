@@ -20,6 +20,7 @@ import HeaderRight from "./HeaderRight.vue";
   justify-content: space-between;
   align-items: center;
   padding: 16px 10%;
+  box-shadow: 0px 2px 5px 0px #0000001a;
 }
 
 .logo {
